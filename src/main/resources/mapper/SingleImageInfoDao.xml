@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ponmma.cl.dao.SingleImageInfoDao">
+
+	<insert id="insertSingleImageInfo" parameterType="SingleImageInfo"
+		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO
+		tb_single_imageinfo(src)
+		VALUES
+		(#{src})
+	</insert>
+
+	<delete id="deleteSingleImageInfo">
+		DELETE FROM tb_single_imageinfo
+		WHERE id=#{id}
+	</delete>
+
+	<update id="updateSingleImageInfo" parameterType="SingleImageInfo">
+		UPDATE tb_single_imageinfo
+		<set>
+			<if test="src != null">src=#{src}</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<select id="querySingleImageInfo" resultType="SingleImageInfo">
+		SELECT *
+		FROM tb_single_imageinfo
+		WHERE id=#{id}
+	</select>
+
+</mapper>

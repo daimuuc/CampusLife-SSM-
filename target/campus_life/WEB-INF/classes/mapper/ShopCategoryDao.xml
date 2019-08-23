@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ponmma.cl.dao.ShopCategoryDao">
+
+    <resultMap id="shopCategoryResultMap" type="com.ponmma.cl.entity.ShopCategory">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="last_edit_time" property="lastEditTime"/>
+        <association property="singleImageInfo" column="image_id"
+                     javaType="com.ponmma.cl.entity.SingleImageInfo">
+            <id column="s_id" property="id" />
+            <result column="src" property="src" />
+        </association>
+    </resultMap>
+    
+    <insert id="insertShopCategory" parameterType="ShopCategory"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+            INSERT INTO
+		    tb_shop_category(name, last_edit_time, image_id)
+		    VALUES
+		    (#{name}, #{lastEditTime}, #{singleImageInfo.id})
+    </insert>
+
+    <delete id="deleteShopCategory">
+		DELETE FROM tb_shop_category
+		WHERE id=#{id}
+	</delete>
+
+    <update id="updateShopCategory" parameterType="ShopCategory">
+        UPDATE tb_shop_category
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="lastEditTime != null">last_edit_time=#{lastEditTime},</if>
+            <if test="singleImageInfo != null and singleImageInfo.id != null">image_id=#{singleImageInfo.id}</if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <select id="queryShopCategoryList" resultMap="shopCategoryResultMap">
+		SELECT
+		p.id,
+		p.name,
+		p.last_edit_time,
+		s.id AS s_id,
+		s.src
+		FROM tb_shop_category p, tb_single_imageinfo s
+		WHERE p.image_id = s.id
+	</select>
+
+    <select id="queryShopCategoryById" resultMap="shopCategoryResultMap">
+        SELECT
+        p.id,
+		p.name,
+		p.last_edit_time,
+		s.id AS s_id,
+		s.src
+		FROM tb_shop_category p, tb_single_imageinfo s
+		WHERE p.image_id = s.id AND p.id = #{id}
+    </select>
+</mapper>

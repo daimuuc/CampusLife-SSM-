@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ponmma.cl.dao.ShopInfoDao">
+
+    <resultMap id="shopInfoResultMap" type="com.ponmma.cl.entity.ShopInfo">
+        <id column="id" property="id" />
+        <result column="des" property="des" />
+        <result column="addr" property="addr" />
+        <association property="personInfo" column="person_info_id"
+                     javaType="com.ponmma.cl.entity.PersonInfo">
+            <id column="p_id" property="id" />
+            <result column="p_name" property="name" />
+            <result column="p_phone" property="phone"/>
+            <result column="p_password" property="password" />
+            <result column="p_role" property="role" />
+            <association property="singleImageInfo" column="p_image_id"
+                         javaType="com.ponmma.cl.entity.SingleImageInfo">
+                <id column="p_s_id" property="id" />
+                <result column="p_s_src" property="src" />
+            </association>
+        </association>
+        <association property="shopCategory" column="shop_category_id"
+                     javaType="com.ponmma.cl.entity.ShopCategory">
+            <id column="s_id" property="id" />
+            <result column="s_name" property="name" />
+        </association>
+        <association property="area" column="area_info_id"
+                     javaType="com.ponmma.cl.entity.Area">
+            <id column="a_id" property="id" />
+            <result column="a_name" property="name" />
+        </association>
+    </resultMap>
+
+    <insert id="insertShopInfo" parameterType="ShopInfo"
+			useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO
+		tb_shopinfo(des, addr, person_info_id, shop_category_id, area_info_id)
+		VALUES
+		(#{des}, #{addr}, #{personInfo.id}, #{shopCategory.id}, #{area.id})
+	</insert>
+
+    <delete id="deleteShopInfo">
+		DELETE FROM tb_shopinfo
+		WHERE id=#{id}
+	</delete>
+
+    <update id="updateShopInfo" parameterType="ShopInfo">
+        UPDATE tb_shopinfo
+        <set>
+            <if test="des != null">des=#{des},</if>
+            <if test="addr != null">addr=#{addr},</if>
+            <if test="personInfo != null and personInfo.id != null">person_info_id=#{personInfo.id},</if>
+            <if test="shopCategory != null and shopCategory.id != null">shop_category_id=#{shopCategory.id},</if>
+            <if test="area != null and area.id != null">area_info_id=#{area.id}</if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <select id="queryShopInfoByPersonInfoId" resultMap="shopInfoResultMap">
+		SELECT
+		t.id,
+		t.des,
+		t.addr,
+		p.id as p_id,
+		p.name as p_name,
+		p.phone as p_phone,
+		p.password as p_password,
+		p.role as p_role,
+		m.id AS p_s_id,
+		m.src AS p_s_src,
+		s.id AS s_id,
+		s.name AS s_name,
+		a.id AS a_id,
+		a.name AS a_name
+		FROM tb_shopinfo t, tb_personinfo p, tb_shop_category s, tb_area a, tb_single_imageinfo m
+		WHERE t.person_info_id=#{personInfoId} AND t.person_info_id = p.id
+		AND t.shop_category_id = s.id AND t.area_info_id = a.id AND p.image_id = m.id
+	</select>
+
+
+    <select id="queryShopInfoList" resultMap="shopInfoResultMap">
+		SELECT
+		t.id,
+		t.des,
+		t.addr,
+		p.id as p_id,
+		p.name as p_name,
+		p.phone as p_phone,
+		p.password as p_password,
+		p.role as p_role,
+		m.id AS p_s_id,
+		m.src AS p_s_src,
+		s.id AS s_id,
+		s.name AS s_name,
+		a.id AS a_id,
+		a.name AS a_name
+		FROM tb_shopinfo t, tb_personinfo p, tb_shop_category s, tb_area a, tb_single_imageinfo m
+		WHERE t.person_info_id = p.id AND t.shop_category_id = s.id AND t.area_info_id = a.id AND p.image_id = m.id
+	</select>
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ponmma.cl.dao.PersonInfoDao">
+
+	<resultMap id="personInfoResultMap" type="com.ponmma.cl.entity.PersonInfo">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="phone" property="phone" />
+		<result column="password" property="password" />
+		<result column="role" property="role" />
+		<association property="singleImageInfo" column="image_id"
+					 javaType="com.ponmma.cl.entity.SingleImageInfo">
+			<id column="s_id" property="id" />
+			<result column="src" property="src" />
+		</association>
+	</resultMap>
+
+	<insert id="insertPersonInfo" parameterType="PersonInfo"
+		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO
+		tb_personinfo(name, phone, password, role, image_id)
+		VALUES
+		(#{name}, #{phone}, #{password}, #{role}, #{singleImageInfo.id})
+	</insert>
+
+	<delete id="deletePersonInfo">
+		DELETE FROM tb_personinfo
+		WHERE id=#{id}
+	</delete>
+
+	<update id="updatePersonInfo" parameterType="PersonInfo">
+		UPDATE tb_personinfo
+		<set>
+			<if test="name != null">name=#{name},</if>
+			<if test="phone != null">phone=#{phone},</if>
+			<if test="password != null">password=#{password},</if>
+			<if test="role != null">role=#{role},</if>
+			<if test="singleImageInfo != null and singleImageInfo.id != null">image_id=#{singleImageInfo.id}</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+
+	<select id="queryPersonInfoById" resultMap="personInfoResultMap">
+		SELECT
+		p.id,
+		p.name,
+		p.phone,
+		p.password,
+		p.role,
+		s.id AS s_id,
+		s.src
+		FROM tb_personinfo p, tb_single_imageinfo s
+		WHERE p.id=#{id} AND p.image_id = s.id
+	</select>
+
+
+	<select id="queryPersonInfoByPhoneAndPasswordAndRole" resultMap="personInfoResultMap">
+		SELECT
+		p.id,
+		p.name,
+		p.phone,
+		p.password,
+		p.role,
+		s.id AS s_id,
+		s.src
+		FROM tb_personinfo p, tb_single_imageinfo s
+		<where>
+			<if test="phone != null">p.phone=#{phone}</if>
+			<if test="password != null">AND p.password=#{password}</if>
+			<if test="role != null"> AND p.role=#{role}</if>
+			AND p.image_id = s.id
+		</where>
+	</select>
+</mapper>

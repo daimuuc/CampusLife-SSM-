@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ponmma.cl.dao.ProductCategoryDao">
+
+    <insert id="insertProductCategory" parameterType="ProductCategory"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO
+		tb_product_category(name, last_edit_time, shop_info_id)
+		VALUES
+		(#{name}, #{lastEditTime}, #{shopInfoId})
+	</insert>
+
+    <delete id="deleteProductCategory">
+		DELETE FROM tb_product_category
+		WHERE id=#{id}
+	</delete>
+
+    <update id="updateProductCategory" parameterType="ProductCategory">
+		UPDATE tb_product_category
+		<set>
+            <if test="name != null">name=#{name},</if>
+            <if test="lastEditTime != null">last_edit_time=#{lastEditTime},</if>
+            <if test="shopInfoId != null">shop_info_id=#{shopInfoId}</if>
+        </set>
+		WHERE id=#{id}
+	</update>
+
+    <select id="queryProductCategoryByShopInfoId" resultType="ProductCategory">
+		SELECT *
+		FROM tb_product_category
+		WHERE shop_info_id=#{shopInfoId}
+	</select>
+
+</mapper>
