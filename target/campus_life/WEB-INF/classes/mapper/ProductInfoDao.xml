@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ponmma.cl.dao.ProductInfoDao">
+
+    <resultMap id="productInfoMap" type="com.ponmma.cl.entity.ProductInfo">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="last_edit_time" property="lastEditTime" />
+        <result column="des" property="des" />
+        <result column="normal_price" property="normalPrice" />
+        <result column="promotion_price" property="promotionPrice" />
+        <result column="point" property="point" />
+        <result column="enable_status" property="enableStatus" />
+        <association property="singleImageInfo" column="image_id"
+                     javaType="com.ponmma.cl.entity.SingleImageInfo">
+            <id column="s_id" property="id" />
+            <result column="s_src" property="src" />
+        </association>
+        <association property="productCategory" column="product_category_id"
+                     javaType="com.ponmma.cl.entity.ProductCategory">
+            <id column="p_id" property="id" />
+            <result column="p_name" property="name" />
+        </association>
+    </resultMap>
+
+    <insert id="insertProductInfo" parameterType="ProductInfo"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO
+		tb_productinfo(name, last_edit_time, shop_info_id, des, image_id,
+		  normal_price, promotion_price, point, enable_status, product_category_id)
+		VALUES
+		(#{name}, #{lastEditTime}, #{shopInfo.id}, #{des}, #{singleImageInfo.id},
+		  #{normalPrice}, #{promotionPrice}, #{point}, #{enableStatus}, #{productCategory.id})
+	</insert>
+
+    <delete id="deleteProductInfo">
+		DELETE FROM tb_productinfo
+		WHERE id=#{id}
+	</delete>
+
+    <update id="updateProductInfo" parameterType="ProductInfo">
+        UPDATE tb_productinfo
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="lastEditTime != null">last_edit_time=#{lastEditTime},</if>
+            <if test="des != null">des=#{des},</if>
+            <if test="normalPrice != null">normal_price=#{normalPrice},</if>
+            <if test="promotionPrice != null">promotion_price=#{promotionPrice},</if>
+            <if test="point != null">point=#{point},</if>
+            <if test="enableStatus != null">enable_status=#{enableStatus},</if>
+            <if test="productCategory != null and productCategory.id != null">product_category_id=#{productCategory.id}</if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <select id="queryProductInfoList" resultMap="productInfoMap">
+		SELECT
+		t.id,
+		t.name,
+		t.last_edit_time,
+		t.des,
+		t.normal_price,
+		t.promotion_price,
+		t.point,
+		t.enable_status,
+		p.id AS p_id,
+		p.name AS p_name,
+        s.id AS s_id,
+        s.src AS s_src
+		FROM tb_productinfo t, tb_product_category p, tb_single_imageinfo s
+		<where>
+            <if test="name != null">
+              AND t.name LIKE '%${name}%'
+            </if>
+            <if test="productCategory != null and productCategory.id != null">
+              AND t.product_category_id = #{productCategory.id}
+            </if>
+            <if test="shopInfo != null and shopInfo.id != null">
+              AND t.shop_info_id = #{shopInfo.id}
+            </if>
+            <if test="id != null">
+              AND t.id = #{id}
+            </if>
+            AND t.image_id = s.id
+            AND t.product_category_id = p.id
+        </where>
+	</select>
+
+</mapper>

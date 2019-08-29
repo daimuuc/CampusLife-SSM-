@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ponmma.cl.dao.MutipleImageInfoDao">
+
+    <insert id="insertMutipleImageInfoBatch"
+            useGeneratedKeys="true">
+		INSERT INTO
+		tb_mutiple_imageinfo(src, product_info_id)
+		VALUES
+		<foreach collection="mutipleImageInfoList" item="mutipleImageInfo" separator=",">
+            (#{mutipleImageInfo.src}, #{mutipleImageInfo.productInfoId})
+        </foreach>
+	</insert>
+
+    <delete id="deleteMutipleImageInfo">
+		DELETE FROM tb_mutiple_imageinfo
+		WHERE product_info_id=#{productInfoId}
+	</delete>
+
+    <select id="queryMutipleImageInfoList" resultType="MutipleImageInfo">
+		SELECT *
+		FROM tb_mutiple_imageinfo
+		WHERE product_info_id=#{productInfoId}
+	</select>
+
+</mapper>

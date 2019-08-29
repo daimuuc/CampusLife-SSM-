@@ -35,4 +35,18 @@ public class ShopController {
      */
     @RequestMapping(value = "productcategory", method = RequestMethod.GET)
     private String productCategory() { return "shop/productcategory"; }
+
+    /**
+     * 商品管理路由
+     * @return
+     */
+    @RequestMapping(value = "productmanagement", method = RequestMethod.GET)
+    private String productManagement() { return "shop/productmanagement"; }
+
+    /**
+     * 商品信息路由
+     * @return
+     */
+    @RequestMapping(value = "productinfo", method = RequestMethod.GET)
+    private String productInfo() { return "shop/productinfo"; }
 }
