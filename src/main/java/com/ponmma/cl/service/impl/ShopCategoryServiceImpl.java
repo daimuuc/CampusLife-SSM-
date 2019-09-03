@@ -1,5 +1,11 @@
 package com.ponmma.cl.service.impl;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ponmma.cl.cache.JedisUtil;
 import com.ponmma.cl.dao.ShopCategoryDao;
 import com.ponmma.cl.dao.SingleImageInfoDao;
 import com.ponmma.cl.dto.ShopCategoryExecution;
@@ -14,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +31,10 @@ public class ShopCategoryServiceImpl implements ShopCategoryService {
     private ShopCategoryDao shopCategoryDao;
     @Autowired
     private SingleImageInfoDao singleImageInfoDao;
+    @Autowired
+    private JedisUtil.Keys jedisKeys;
+    @Autowired
+    private JedisUtil.Strings jedisStrings;
 
     @Override
     @Transactional
@@ -114,14 +126,51 @@ public class ShopCategoryServiceImpl implements ShopCategoryService {
     @Override
     @Transactional
     public ShopCategoryExecution getShopCategoryList() throws ShopCategoryException {
+        // 定义redis的key
+        String key = SHOPCATEGORYLISTKEY;
+        // 定义接收对象
         List<ShopCategory> shopCategoryList = null;
-        try {
-            shopCategoryList = shopCategoryDao.queryShopCategoryList();
-            if (shopCategoryList == null)
+        // 定义jackson数据转换操作类
+        ObjectMapper mapper = new ObjectMapper();
+
+        // 判断key是否存在
+        if (!jedisKeys.exists(key)) {
+            // 若不存在，则从数据库里面取出相应数据
+            try {
+                shopCategoryList = shopCategoryDao.queryShopCategoryList();
+                if (shopCategoryList == null)
+                    throw new ShopCategoryException("查询商铺类别失败");
+            }catch (Exception e) {
+                e.printStackTrace();
                 throw new ShopCategoryException("查询商铺类别失败");
-        }catch (Exception e) {
-            e.printStackTrace();
-            throw new ShopCategoryException("查询商铺类别失败");
+            }
+            // 将相关的实体类集合转换成string,存入redis里面对应的key中
+            String jsonString;
+            try {
+                jsonString = mapper.writeValueAsString(shopCategoryList);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                throw new ShopCategoryException(e.getMessage());
+            }
+            jedisStrings.set(key, jsonString);
+        }else {
+            // 若存在，则直接从redis里面取出相应数据
+            String jsonString = jedisStrings.get(key);
+            // 指定要将string转换成的集合类型
+            JavaType javaType = mapper.getTypeFactory().constructParametricType(ArrayList.class, ShopCategory.class);
+            try {
+                // 将相关key对应的value里的的string转换成对象的实体类集合
+                shopCategoryList = mapper.readValue(jsonString, javaType);
+            } catch (JsonParseException e) {
+                e.printStackTrace();
+                throw new ShopCategoryException(e.getMessage());
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+                throw new ShopCategoryException(e.getMessage());
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new ShopCategoryException(e.getMessage());
+            }
         }
 
         return new ShopCategoryExecution(ShopCategoryEnum.QUERY_SUCCESS, shopCategoryList);

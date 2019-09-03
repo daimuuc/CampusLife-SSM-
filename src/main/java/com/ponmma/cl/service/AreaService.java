@@ -7,6 +7,7 @@ import com.ponmma.cl.exceptions.AreaException;
 import java.util.List;
 
 public interface AreaService {
+    String AREALISTKEY = "cl_arealist";
 
     /**
      * 插入区域信息

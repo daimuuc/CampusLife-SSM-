@@ -62,4 +62,38 @@ public class ShopInfoDaoTest extends BaseTest {
         int effectNum = shopInfoDao.deleteShopInfo(id);
         assertEquals(1, effectNum);
     }
+
+    @Test
+    public void testQueryShopInfoListCondition() {
+        ShopInfo shopInfo = new ShopInfo();
+        PersonInfo personInfo = new PersonInfo();
+        personInfo.setName("");
+        shopInfo.setPersonInfo(personInfo);
+//        ShopCategory shopCategory = new ShopCategory();
+//        shopCategory.setId(6);
+//        shopInfo.setShopCategory(shopCategory);
+//        Area area = new Area();
+//        area.setId(10);
+//        shopInfo.setArea(area);
+
+        List<ShopInfo> shopInfoList = shopInfoDao.queryShopInfoListCondition(shopInfo, 0, 3);
+        System.out.println(shopInfoList.size());
+    }
+
+    @Test
+    public void testQueryShopInfoCount() {
+        ShopInfo shopInfo = new ShopInfo();
+        PersonInfo personInfo = new PersonInfo();
+        personInfo.setName("奶茶");
+        shopInfo.setPersonInfo(personInfo);
+//        ShopCategory shopCategory = new ShopCategory();
+//        shopCategory.setId(6);
+//        shopInfo.setShopCategory(shopCategory);
+//        Area area = new Area();
+//        area.setId(10);
+//        shopInfo.setArea(area);
+
+        int cnt = shopInfoDao.queryShopInfoCount(shopInfo);
+        System.out.println(cnt);
+    }
 }

@@ -99,4 +99,47 @@
 		FROM tb_shopinfo t, tb_personinfo p, tb_shop_category s, tb_area a, tb_single_imageinfo m
 		WHERE t.person_info_id = p.id AND t.shop_category_id = s.id AND t.area_info_id = a.id AND p.image_id = m.id
 	</select>
+
+	<select id="queryShopInfoListCondition" resultMap="shopInfoResultMap">
+		SELECT
+		t.id,
+		t.des,
+		t.addr,
+		p.id as p_id,
+		p.name as p_name,
+		p.phone as p_phone,
+		p.password as p_password,
+		p.role as p_role,
+		m.id AS p_s_id,
+		m.src AS p_s_src,
+		s.id AS s_id,
+		s.name AS s_name,
+		a.id AS a_id,
+		a.name AS a_name
+		FROM tb_shopinfo t, tb_personinfo p, tb_shop_category s, tb_area a, tb_single_imageinfo m
+		<where>
+			<if test="shopCondition.personInfo != null and shopCondition.personInfo.name != null">
+			AND t.person_info_id IN	(SELECT id FROM tb_personinfo WHERE name LIKE '%${shopCondition.personInfo.name}%')
+			</if>
+			<if test="shopCondition.shopCategory != null and shopCondition.shopCategory.id != null">AND t.shop_category_id = #{shopCondition.shopCategory.id}</if>
+			<if test="shopCondition.area != null and shopCondition.area.id != null">AND t.area_info_id = #{shopCondition.area.id}</if>
+			AND t.person_info_id = p.id AND t.shop_category_id = s.id AND t.area_info_id = a.id AND p.image_id = m.id
+		</where>
+		LIMIT #{rowIndex}, #{pageSize};
+	</select>
+
+	<select id="queryShopInfoCount" resultType="int">
+		SELECT
+		COUNT(1)
+		FROM tb_shopinfo t, tb_personinfo p, tb_shop_category s, tb_area a, tb_single_imageinfo m
+		<where>
+			<if test="shopCondition.personInfo != null and shopCondition.personInfo.name != null">
+				AND t.person_info_id IN	(SELECT id FROM tb_personinfo WHERE name LIKE '%${shopCondition.personInfo.name}%')
+			</if>
+			<if test="shopCondition.shopCategory != null and shopCondition.shopCategory.id != null">AND t.shop_category_id = #{shopCondition.shopCategory.id}</if>
+			<if test="shopCondition.area != null and shopCondition.area.id != null">AND t.area_info_id = #{shopCondition.area.id}</if>
+			AND t.person_info_id = p.id AND t.shop_category_id = s.id AND t.area_info_id = a.id AND p.image_id = m.id
+		</where>
+	</select>
+
 </mapper>

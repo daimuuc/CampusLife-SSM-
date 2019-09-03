@@ -38,4 +38,11 @@ public interface ShopInfoService {
      */
     ShopInfoExecution getShopInfoList() throws ShopInfoException;
 
+    /**
+     * 按照条件分页查询商铺信息
+     * @return
+     * @throws ShopInfoException
+     */
+    ShopInfoExecution getShopInfoListCondition(ShopInfo shopCondition, int pageIndex, int pageSize) throws ShopInfoException;
+
 }

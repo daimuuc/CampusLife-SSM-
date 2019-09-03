@@ -10,6 +10,7 @@ import com.ponmma.cl.exceptions.ShopInfoException;
 import com.ponmma.cl.service.ShopInfoService;
 import com.ponmma.cl.util.ImageHolder;
 import com.ponmma.cl.util.ImageUtil;
+import com.ponmma.cl.util.PageCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,6 +82,33 @@ public class ShopInfoServiceImpl implements ShopInfoService {
         }
 
         return new ShopInfoExecution(ShopInfoEnum.QUERY_SUCCESS, shopInfoList);
+    }
+
+    @Override
+    @Transactional
+    public ShopInfoExecution getShopInfoListCondition(ShopInfo shopCondition, int pageIndex, int pageSize) throws ShopInfoException {
+        List<ShopInfo> shopInfoList = null;
+        int cnt;
+        //将页码转换成行码
+        int rowIndex = PageCalculator.calculateRowIndex(pageIndex, pageSize);
+
+        try {
+            //依据查询条件，调用dao层返回相关的店铺列表
+            shopInfoList = shopInfoDao.queryShopInfoListCondition(shopCondition, rowIndex, pageSize);
+            if (shopInfoList == null)
+                throw new ShopInfoException("查询商铺信息失败");
+
+            //依据相同的查询条件，返回店铺总数
+            cnt = shopInfoDao.queryShopInfoCount(shopCondition);
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new ShopInfoException("查询商铺信息失败");
+        }
+
+        ShopInfoExecution shopInfoExecution = new ShopInfoExecution(ShopInfoEnum.QUERY_SUCCESS, shopInfoList);
+        shopInfoExecution.setCount(cnt);
+
+        return shopInfoExecution;
     }
 
 }

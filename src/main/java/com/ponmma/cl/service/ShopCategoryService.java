@@ -6,6 +6,7 @@ import com.ponmma.cl.exceptions.ShopCategoryException;
 import com.ponmma.cl.util.ImageHolder;
 
 public interface ShopCategoryService {
+    String SHOPCATEGORYLISTKEY = "cl_shopcategorylist";
 
     /**
      * 添加商铺类别
