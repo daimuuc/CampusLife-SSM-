@@ -17,7 +17,21 @@ public class ClientController {
     @RequestMapping(value = "index", method = RequestMethod.GET)
     private String index() { return "client/index"; }
 
+    /**
+     * 商店列表路由
+     * @return
+     */
     @RequestMapping(value = "shoplist", method = RequestMethod.GET)
     private String shopList() { return "client/shoplist"; }
+
+    /**
+     * 商店详情路由
+     * @return
+     */
+    @RequestMapping(value = "shopdetail", method = RequestMethod.GET)
+    private String shopDetail() { return "client/shopdetail"; }
+
+    @RequestMapping(value = "productdetail", method = RequestMethod.GET)
+    private String productDetail() { return "client/productdetail"; }
 
 }

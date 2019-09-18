@@ -42,6 +42,13 @@ public class ShopInfoDaoTest extends BaseTest {
     }
 
     @Test
+    public void testQueryShopInfoById() {
+        Integer shopInfoId = 6;
+        ShopInfo shopInfo = shopInfoDao.queryShopInfoById(shopInfoId);
+        System.out.println(shopInfo);
+    }
+
+    @Test
     public void testQueryShopInfoList() {
         List<ShopInfo> shopInfoList = shopInfoDao.queryShopInfoList();
         assertEquals(1, shopInfoList.size());

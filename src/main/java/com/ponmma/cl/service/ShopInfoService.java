@@ -24,12 +24,20 @@ public interface ShopInfoService {
     ShopInfoExecution modifyShopInfo(ShopInfo shopInfo) throws ShopInfoException;
 
     /**
-     * 查询商铺信息
+     * 根据personInfoId查询商铺信息
      * @param personInfoId
      * @return
      * @throws ShopInfoException
      */
     ShopInfoExecution getShopInfoByPersonInfoId(Integer personInfoId) throws ShopInfoException;
+
+    /**
+     * 根据id查询商铺信息
+     * @param id
+     * @return
+     * @throws ShopInfoException
+     */
+    ShopInfoExecution getShopInfoById(Integer id) throws ShopInfoException;
 
     /**
      * 查询所有商铺信息

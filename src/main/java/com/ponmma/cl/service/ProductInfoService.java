@@ -51,4 +51,14 @@ public interface ProductInfoService {
      */
     ProductInfoExecution getProductInfo(ProductInfo productInfo) throws ProductInfoException;
 
+    /**
+     * 按照条件分页查询商品信息
+     * @param productCondition
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     * @throws ProductInfoException
+     */
+    ProductInfoExecution getProductInfoListCondition(ProductInfo productCondition, int pageIndex, int pageSize) throws ProductInfoException;
+
 }

@@ -79,6 +79,26 @@
 		AND t.shop_category_id = s.id AND t.area_info_id = a.id AND p.image_id = m.id
 	</select>
 
+	<select id="queryShopInfoById" resultMap="shopInfoResultMap">
+		SELECT
+		t.id,
+		t.des,
+		t.addr,
+		p.id as p_id,
+		p.name as p_name,
+		p.phone as p_phone,
+		p.password as p_password,
+		p.role as p_role,
+		m.id AS p_s_id,
+		m.src AS p_s_src,
+		s.id AS s_id,
+		s.name AS s_name,
+		a.id AS a_id,
+		a.name AS a_name
+		FROM tb_shopinfo t, tb_personinfo p, tb_shop_category s, tb_area a, tb_single_imageinfo m
+		WHERE t.id=#{id} AND t.person_info_id = p.id
+		AND t.shop_category_id = s.id AND t.area_info_id = a.id AND p.image_id = m.id
+	</select>
 
     <select id="queryShopInfoList" resultMap="shopInfoResultMap">
 		SELECT

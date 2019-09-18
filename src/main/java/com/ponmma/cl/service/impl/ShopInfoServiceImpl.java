@@ -72,6 +72,20 @@ public class ShopInfoServiceImpl implements ShopInfoService {
 
     @Override
     @Transactional
+    public ShopInfoExecution getShopInfoById(Integer id) throws ShopInfoException {
+        ShopInfo shopInfo = null;
+        try {
+            shopInfo = shopInfoDao.queryShopInfoById(id);
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw  new ShopInfoException("查询商铺信息失败");
+        }
+
+        return new ShopInfoExecution(ShopInfoEnum.QUERY_SUCCESS, shopInfo);
+    }
+
+    @Override
+    @Transactional
     public ShopInfoExecution getShopInfoList() throws ShopInfoException {
         List<ShopInfo> shopInfoList = null;
         try {

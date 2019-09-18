@@ -64,6 +64,29 @@ public class ProductInfoDaoTest extends BaseTest {
     }
 
     @Test
+    public void testQueryProductInfoListCondition() {
+        ProductInfo productInfo = new ProductInfo();
+        productInfo.setEnableStatus(1);
+
+//        productInfo.setName("奶");
+
+        ShopInfo shopInfo = new ShopInfo();
+        shopInfo.setId(6);
+        productInfo.setShopInfo(shopInfo);
+
+//        ProductCategory productCategory = new ProductCategory();
+//        productCategory.setId(2);
+//        productInfo.setProductCategory(productCategory);
+
+        List<ProductInfo> productInfoList = productInfoDao.queryProductInfoListCondition(productInfo, 1, 3);
+        System.out.println(productInfoList);
+        System.out.println(productInfoList.size());
+
+        int size = productInfoDao.queryProductInfoCount(productInfo);
+        System.out.println(size);
+    }
+
+    @Test
     public void testUpdateProductInfo() {
         ProductInfo productInfo = new ProductInfo();
         productInfo.setName("巴黎");

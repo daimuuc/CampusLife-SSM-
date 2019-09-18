@@ -36,6 +36,13 @@ public interface ShopInfoDao {
     ShopInfo queryShopInfoByPersonInfoId(Integer personInfoId);
 
     /**
+     * 根据id查询商铺信息
+     * @param id
+     * @return
+     */
+    ShopInfo queryShopInfoById(Integer id);
+
+    /**
      * 查询所有商铺信息
      * @return
      */

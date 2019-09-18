@@ -12,6 +12,7 @@ import com.ponmma.cl.exceptions.ProductInfoException;
 import com.ponmma.cl.service.ProductInfoService;
 import com.ponmma.cl.util.ImageHolder;
 import com.ponmma.cl.util.ImageUtil;
+import com.ponmma.cl.util.PageCalculator;
 import com.ponmma.cl.util.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -183,6 +184,29 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         }
 
         return new ProductInfoExecution(ProductInfoEnum.QUERY_SUCCESS, productInfoList);
+    }
+
+    @Override
+    @Transactional
+    public  ProductInfoExecution getProductInfoListCondition(ProductInfo productCondition, int pageIndex, int pageSize) throws ProductInfoException {
+        List<ProductInfo> productInfoList = null;
+        int cnt;
+        //将页码转换成行码
+        int rowIndex = PageCalculator.calculateRowIndex(pageIndex, pageSize);
+
+        // 获取商品列表和总数
+        try {
+            productInfoList = productInfoDao.queryProductInfoListCondition(productCondition, rowIndex, pageSize);
+            cnt = productInfoDao.queryProductInfoCount(productCondition);
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new ProductInfoException("获取商品列表和总数异常：" + e.toString());
+        }
+
+        ProductInfoExecution pie = new ProductInfoExecution(ProductInfoEnum.QUERY_SUCCESS, productInfoList);
+        pie.setCount(cnt);
+
+        return pie;
     }
 
     /**
