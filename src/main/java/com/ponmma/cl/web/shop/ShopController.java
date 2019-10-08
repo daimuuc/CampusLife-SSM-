@@ -49,4 +49,11 @@ public class ShopController {
      */
     @RequestMapping(value = "productinfo", method = RequestMethod.GET)
     private String productInfo() { return "shop/productinfo"; }
+
+    /**
+     * 订单管理路由
+     * @return
+     */
+    @RequestMapping(value = "ordermanagement", method = RequestMethod.GET)
+    private String orderManagement() { return "shop/ordermanagement"; }
 }

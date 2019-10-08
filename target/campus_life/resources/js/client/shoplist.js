@@ -29,7 +29,7 @@ $(function () {
     // 渲染出店铺类别列表以及区域列表以供搜索
     getSearchDivData();
 
-    // 预先加载10条店铺信息
+    // 预先加载3条店铺信息
     addItems(pageSize, pageNum);
 
     // 点击后打开右侧栏

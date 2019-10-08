@@ -19,4 +19,14 @@ $(function() {
 			}
 		});
 	});
+
+	// 跳转到购物车界面
+	$('#cart-nav').click(function () {
+		window.location.href = '/campus_life/client/cart';
+	})
+
+	// 跳转到首页
+	$('#index-nav').click(function () {
+		window.location.href = '/campus_life/client/index';
+	})
 });

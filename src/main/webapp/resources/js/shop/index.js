@@ -8,6 +8,9 @@ $(function () {
     // 获取ShopInfo
     $.getJSON(getShopInfoURL, function (data) {
        if (data.success) {
+           // 获取personInfo
+           var personInfo = data.personInfo;
+           $('#user_name').text(' ' + personInfo.name + ' ');
            // 获取shopInfo
            var shopInfo = data.shopInfo;
            // shopInfo为空则跳转到商铺注册界面

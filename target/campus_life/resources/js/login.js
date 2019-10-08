@@ -57,7 +57,7 @@ $(function () {
                     }
                     else {
                         // 若用户类型为管理员，则登录到管理员界面
-                        window.location.href = '/campus_life/admin/index'
+                        window.location.href = '/campus_life/admin/index';
                     }
                 } else {
                     $.toast('登录失败！' + data.errMsg);

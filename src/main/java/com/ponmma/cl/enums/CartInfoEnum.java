@@ -2,7 +2,7 @@ package com.ponmma.cl.enums;
 
 public enum CartInfoEnum {
 
-    ADD_SUCCESS(1, "添加成功"), QUERY_SUCCESS(2, "查询成功");
+    ADD_FAILURE(-1, "添加失败"), ADD_SUCCESS(1, "添加成功"), QUERY_SUCCESS(2, "查询成功"), DELETE_SUCCESS(3, "删除成功");
 
     private int state;
     private String stateInfo;
@@ -21,9 +21,9 @@ public enum CartInfoEnum {
     }
 
     public static CartInfoEnum stateOf(int state) {
-        for (CartInfoEnum areaEnum : values()) {
-            if (areaEnum.getState() == state) {
-                return areaEnum;
+        for (CartInfoEnum cartInfoEnum : values()) {
+            if (cartInfoEnum.getState() == state) {
+                return cartInfoEnum;
             }
         }
         return null;

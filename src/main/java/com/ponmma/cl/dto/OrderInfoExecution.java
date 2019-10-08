@@ -1,7 +1,8 @@
 package com.ponmma.cl.dto;
 
 import com.ponmma.cl.entity.CartInfo;
-import com.ponmma.cl.enums.CartInfoEnum;
+import com.ponmma.cl.entity.OrderInfo;
+import com.ponmma.cl.enums.OrderInfoEnum;
 
 import java.util.List;
 
@@ -13,33 +14,33 @@ public class OrderInfoExecution {
     private String stateInfo;
     // 数量
     private int count;
-    // cartInfo
-    private CartInfo cartInfo;
-    // cartInfoList列表
-    private List<CartInfo> cartInfoList;
+    // orderInfo
+    private OrderInfo orderInfo;
+    // orderInfoList列表
+    private List<OrderInfo> orderInfoList;
 
     public OrderInfoExecution() {
 
     }
 
     // 操作失败的时候使用的构造器
-    public OrderInfoExecution(CartInfoEnum stateEnum) {
+    public OrderInfoExecution(OrderInfoEnum stateEnum) {
         this.state = stateEnum.getState();
         this.stateInfo = stateEnum.getStateInfo();
     }
 
     // 操作成功的时候使用的构造器
-    public OrderInfoExecution(CartInfoEnum stateEnum, CartInfo cartInfo) {
+    public OrderInfoExecution(OrderInfoEnum stateEnum, OrderInfo orderInfo) {
         this.state = stateEnum.getState();
         this.stateInfo = stateEnum.getStateInfo();
-        this.cartInfo = cartInfo;
+        this.orderInfo = orderInfo;
     }
 
     // 操作成功的时候使用的构造器
-    public OrderInfoExecution(CartInfoEnum stateEnum, List<CartInfo> cartInfoList) {
+    public OrderInfoExecution(OrderInfoEnum stateEnum, List<OrderInfo> orderInfoList) {
         this.state = stateEnum.getState();
         this.stateInfo = stateEnum.getStateInfo();
-        this.cartInfoList = cartInfoList;
+        this.orderInfoList = orderInfoList;
     }
 
     public int getState() {
@@ -66,19 +67,19 @@ public class OrderInfoExecution {
         this.count = count;
     }
 
-    public CartInfo getCartInfo() {
-        return cartInfo;
+    public OrderInfo getOrderInfo() {
+        return orderInfo;
     }
 
-    public void setCartInfo(CartInfo cartInfo) {
-        this.cartInfo = cartInfo;
+    public void setOrderInfo(OrderInfo orderInfo) {
+        this.orderInfo = orderInfo;
     }
 
-    public List<CartInfo> getCartInfoList() {
-        return cartInfoList;
+    public List<OrderInfo> getOrderInfoList() {
+        return orderInfoList;
     }
 
-    public void setCartInfoList(List<CartInfo> cartInfoList) {
-        this.cartInfoList = cartInfoList;
+    public void setOrderInfoList(List<OrderInfo> orderInfoList) {
+        this.orderInfoList = orderInfoList;
     }
 }

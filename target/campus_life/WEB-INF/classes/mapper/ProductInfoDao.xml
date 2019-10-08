@@ -88,4 +88,66 @@
         </where>
 	</select>
 
+    <select id="queryProductInfoListCondition" resultMap="productInfoMap">
+        SELECT
+        t.id,
+        t.name,
+        t.last_edit_time,
+        t.des,
+        t.normal_price,
+        t.promotion_price,
+        t.point,
+        t.enable_status,
+        p.id AS p_id,
+        p.name AS p_name,
+        s.id AS s_id,
+        s.src AS s_src
+        FROM tb_productinfo t, tb_product_category p, tb_single_imageinfo s
+        <where>
+            <if test="productCondition.name != null">
+                AND t.name LIKE '%${productCondition.name}%'
+            </if>
+            <if test="productCondition.productCategory != null and productCondition.productCategory.id != null">
+                AND t.product_category_id = #{productCondition.productCategory.id}
+            </if>
+            <if test="productCondition.shopInfo != null and productCondition.shopInfo.id != null">
+                AND t.shop_info_id = #{productCondition.shopInfo.id}
+            </if>
+            <if test="productCondition.id != null">
+                AND t.id = #{productCondition.id}
+            </if>
+            <if test="productCondition.enableStatus != null">
+                AND t.enable_status = #{productCondition.enableStatus}
+            </if>
+            AND t.image_id = s.id
+            AND t.product_category_id = p.id
+        </where>
+        LIMIT #{rowIndex}, #{pageSize};
+    </select>
+
+    <select id="queryProductInfoCount" resultType="int">
+        SELECT
+        COUNT(1)
+        FROM tb_productinfo t, tb_product_category p, tb_single_imageinfo s
+        <where>
+            <if test="name != null">
+                AND t.name LIKE '%${name}%'
+            </if>
+            <if test="productCategory != null and productCategory.id != null">
+                AND t.product_category_id = #{productCategory.id}
+            </if>
+            <if test="shopInfo != null and shopInfo.id != null">
+                AND t.shop_info_id = #{shopInfo.id}
+            </if>
+            <if test="id != null">
+                AND t.id = #{id}
+            </if>
+            <if test="enableStatus != null">
+                AND t.enable_status = #{enableStatus}
+            </if>
+            AND t.image_id = s.id
+            AND t.product_category_id = p.id
+        </where>
+    </select>
+
 </mapper>

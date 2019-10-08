@@ -258,6 +258,7 @@ public class ShopInfoController {
             if (se.getState() == ShopInfoEnum.QUERY_SUCCESS.getState()) {
                 modelMap.put("success", true);
                 modelMap.put("shopInfo", se.getShopInfo());
+                modelMap.put("personInfo", (PersonInfo)request.getSession().getAttribute("personInfo"));
                 request.getSession().setAttribute("shopInfo", se.getShopInfo());
             }else {
                 modelMap.put("success", false);
