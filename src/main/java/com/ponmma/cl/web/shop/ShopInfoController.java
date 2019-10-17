@@ -1,20 +1,12 @@
 package com.ponmma.cl.web.shop;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ponmma.cl.dto.AreaExecution;
-import com.ponmma.cl.dto.PersonInfoExecution;
-import com.ponmma.cl.dto.ShopCategoryExecution;
-import com.ponmma.cl.dto.ShopInfoExecution;
+import com.ponmma.cl.dto.*;
+import com.ponmma.cl.entity.HeadLine;
 import com.ponmma.cl.entity.PersonInfo;
 import com.ponmma.cl.entity.ShopInfo;
-import com.ponmma.cl.enums.AreaEnum;
-import com.ponmma.cl.enums.PersonInfoEnum;
-import com.ponmma.cl.enums.ShopCategoryEnum;
-import com.ponmma.cl.enums.ShopInfoEnum;
-import com.ponmma.cl.service.AreaService;
-import com.ponmma.cl.service.PersonInfoService;
-import com.ponmma.cl.service.ShopCategoryService;
-import com.ponmma.cl.service.ShopInfoService;
+import com.ponmma.cl.enums.*;
+import com.ponmma.cl.service.*;
 import com.ponmma.cl.util.CodeUtil;
 import com.ponmma.cl.util.HttpServletRequestUtil;
 import com.ponmma.cl.util.ImageHolder;
@@ -45,6 +37,8 @@ public class ShopInfoController {
     private AreaService areaService;
     @Autowired
     private PersonInfoService personInfoService;
+    @Autowired
+    private HeadLineService headLineService;
 
     @RequestMapping(value = "info", method = RequestMethod.GET)
     @ResponseBody
@@ -265,6 +259,38 @@ public class ShopInfoController {
                 modelMap.put("errMsg", se.getStateInfo());
             }
         }catch (Exception e) {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", e.toString());
+        }
+
+        return modelMap;
+    }
+
+    @RequestMapping(value = "addheadline", method = RequestMethod.GET)
+    @ResponseBody
+    private Map<String, Object> addHeadline(HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+
+        /*配置HeadLine*/
+        HeadLine headLine = new HeadLine();
+        // 设置SingleImageInfo
+        PersonInfo personInfo = (PersonInfo)request.getSession().getAttribute("personInfo");
+        headLine.setSingleImageInfo(personInfo.getSingleImageInfo());
+        // 设置ShopInfo
+        ShopInfo shopInfo = (ShopInfo)request.getSession().getAttribute("shopInfo");
+        headLine.setShopInfo(shopInfo);
+
+        // 添加头条信息
+        try {
+            HeadLineExecution hle = headLineService.addHeadLine(headLine);
+            if (hle.getState() == HeadLineEnum.ADD_SUCCESS.getState()) {
+                modelMap.put("success", true);
+            }else {
+                modelMap.put("success", false);
+                modelMap.put("errMsg", hle.getStateInfo());
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
             modelMap.put("success", false);
             modelMap.put("errMsg", e.toString());
         }

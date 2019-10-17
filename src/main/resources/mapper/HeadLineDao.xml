@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ponmma.cl.dao.HeadLineDao">
+
+    <resultMap id="headLineMap" type="com.ponmma.cl.entity.HeadLine">
+        <id column="id" property="id" />
+        <result column="last_edit_time" property="lastEditTime" />
+        <result column="status" property="status" />
+        <association property="singleImageInfo"
+                     javaType="com.ponmma.cl.entity.SingleImageInfo">
+            <id column="si_id" property="id" />
+            <result column="si_src" property="src" />
+        </association>
+        <association property="shopInfo"
+                     javaType="com.ponmma.cl.entity.ShopInfo">
+            <id column="s_id" property="id" />
+            <result column="s_des" property="des" />
+            <association property="personInfo"
+                         javaType="com.ponmma.cl.entity.PersonInfo">
+                <result column="p_name" property="name" />
+            </association>
+        </association>
+    </resultMap>
+
+    <insert id="insertHeadLine" parameterType="HeadLine"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+		INSERT INTO
+		tb_headline(last_edit_time, status, image_id, shop_info_id)
+		VALUES
+		(#{lastEditTime}, #{status}, #{singleImageInfo.id}, #{shopInfo.id})
+	</insert>
+
+    <select id="queryHeadLineList" resultMap="headLineMap">
+        SELECT
+        h.id,
+        h.last_edit_time,
+        h.status,
+        si.id AS si_id,
+        si.src AS si_src,
+        s.id AS s_id,
+        s.des AS s_des,
+        p.name AS p_name
+        FROM tb_headline h, tb_single_imageinfo si, tb_shopinfo s, tb_personinfo p
+        WHERE h.image_id = si.id AND h.shop_info_id = s.id AND s.person_info_id = p.id
+              AND h.status = #{status}
+        ORDER BY h.last_edit_time DESC
+    </select>
+
+    <delete id="deleteHeadLine">
+        DELETE FROM tb_headline
+		WHERE id=#{id}
+    </delete>
+
+    <update id="updateHeadLine">
+		UPDATE tb_headline
+		SET status=#{status}
+		WHERE id=#{id}
+	</update>
+
+</mapper>

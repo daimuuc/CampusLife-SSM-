@@ -4,6 +4,8 @@ $(function () {
     var getShopInfoURL = '/campus_life/shop/getshopinfo';
     // 注销登录的URL
     var logoutURL = '/campus_life/main/logout';
+    // 购买头条的URL
+    var addHeadLineURL = '/campus_life/shop/addheadline';
 
     // 获取ShopInfo
     $.getJSON(getShopInfoURL, function (data) {
@@ -38,6 +40,20 @@ $(function () {
                }
            });
        }
+    });
+
+    // 点击购买头条
+    $('#headline').click(function () {
+        $.confirm('确认购买?', function () {
+            $.getJSON(addHeadLineURL, function (data) {
+                if (data.success) {
+                    $.toast("购买成功");
+                }else {
+                    $.toast(data.errMsg);
+                }
+                return ;
+            });
+        });
     });
 
 });

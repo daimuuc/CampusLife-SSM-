@@ -13,6 +13,7 @@ import com.ponmma.cl.entity.ShopCategory;
 import com.ponmma.cl.entity.SingleImageInfo;
 import com.ponmma.cl.enums.ShopCategoryEnum;
 import com.ponmma.cl.exceptions.ShopCategoryException;
+import com.ponmma.cl.service.CacheService;
 import com.ponmma.cl.service.ShopCategoryService;
 import com.ponmma.cl.util.ImageHolder;
 import com.ponmma.cl.util.ImageUtil;
@@ -35,6 +36,8 @@ public class ShopCategoryServiceImpl implements ShopCategoryService {
     private JedisUtil.Keys jedisKeys;
     @Autowired
     private JedisUtil.Strings jedisStrings;
+    @Autowired
+    private CacheService cacheService;
 
     @Override
     @Transactional
@@ -71,6 +74,9 @@ public class ShopCategoryServiceImpl implements ShopCategoryService {
             int effectNum = shopCategoryDao.insertShopCategory(shopCategory);
             if (effectNum <= 0)
                 throw new ShopCategoryException("添加商铺类别失败");
+
+            // 删除redis缓存
+            cacheService.removeFromCache(SHOPCATEGORYLISTKEY);
         }catch (Exception e) {
             e.printStackTrace();
             throw new ShopCategoryException("添加商铺类别失败");
@@ -114,6 +120,9 @@ public class ShopCategoryServiceImpl implements ShopCategoryService {
             int effectNum = shopCategoryDao.updateShopCategory(shopCategory);
             if (effectNum <= 0)
                 throw new ShopCategoryException("更新商铺类别失败");
+
+            // 删除redis缓存
+            cacheService.removeFromCache(SHOPCATEGORYLISTKEY);
         }
         catch (Exception e) {
             e.printStackTrace();

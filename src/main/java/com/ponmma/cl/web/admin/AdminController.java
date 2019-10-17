@@ -55,4 +55,11 @@ public class AdminController {
      */
     @RequestMapping(value = "editshopcategory", method = RequestMethod.GET)
     private String editShopCategory() { return "admin/editshopcategory"; }
+
+    /**
+     * 头条信息路由
+     * @return
+     */
+    @RequestMapping(value = "headline", method = RequestMethod.GET)
+    private String headline() { return "admin/headline"; }
 }

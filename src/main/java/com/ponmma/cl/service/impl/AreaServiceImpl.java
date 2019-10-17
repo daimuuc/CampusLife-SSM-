@@ -12,6 +12,7 @@ import com.ponmma.cl.entity.Area;
 import com.ponmma.cl.enums.AreaEnum;
 import com.ponmma.cl.exceptions.AreaException;
 import com.ponmma.cl.service.AreaService;
+import com.ponmma.cl.service.CacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,8 @@ public class AreaServiceImpl implements AreaService {
     private JedisUtil.Keys jedisKeys;
     @Autowired
     private JedisUtil.Strings jedisStrings;
+    @Autowired
+    private CacheService cacheService;
 
     @Override
     @Transactional
@@ -40,6 +43,9 @@ public class AreaServiceImpl implements AreaService {
             if (effectNum <= 0) {
                 throw new AreaException("区域信息添加失败");
             }
+
+            // 删除redis缓存
+            cacheService.removeFromCache(AREALISTKEY);
         }catch (Exception e) {
             throw new AreaException("区域信息添加失败");
         }
@@ -57,6 +63,9 @@ public class AreaServiceImpl implements AreaService {
                 if (effectNum <= 0)
                     throw new AreaException("区域信息添加失败");
             }
+
+            // 删除redis缓存
+            cacheService.removeFromCache(AREALISTKEY);
         }
         catch (Exception e) {
             throw new AreaException("区域信息添加失败");

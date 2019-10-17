@@ -1,6 +1,7 @@
 package com.ponmma.cl.web.client;
 
 import com.ponmma.cl.dto.AreaExecution;
+import com.ponmma.cl.dto.HeadLineExecution;
 import com.ponmma.cl.dto.ShopCategoryExecution;
 import com.ponmma.cl.dto.ShopInfoExecution;
 import com.ponmma.cl.entity.Area;
@@ -8,9 +9,11 @@ import com.ponmma.cl.entity.PersonInfo;
 import com.ponmma.cl.entity.ShopCategory;
 import com.ponmma.cl.entity.ShopInfo;
 import com.ponmma.cl.enums.AreaEnum;
+import com.ponmma.cl.enums.HeadLineEnum;
 import com.ponmma.cl.enums.ShopCategoryEnum;
 import com.ponmma.cl.enums.ShopInfoEnum;
 import com.ponmma.cl.service.AreaService;
+import com.ponmma.cl.service.HeadLineService;
 import com.ponmma.cl.service.ShopCategoryService;
 import com.ponmma.cl.service.ShopInfoService;
 import com.ponmma.cl.util.HttpServletRequestUtil;
@@ -33,6 +36,8 @@ public class ShopListController {
     private AreaService areaService;
     @Autowired
     private ShopInfoService shopInfoService;
+    @Autowired
+    private HeadLineService headLineService;
 
     @RequestMapping(value = "listindexinfo", method = RequestMethod.GET)
     @ResponseBody
@@ -60,7 +65,24 @@ public class ShopListController {
             modelMap.put("errMsg", e.toString());
         }
 
-        // TODO 获取HeadLine
+        if (!((boolean)modelMap.get("success")))
+            return modelMap;
+
+        // 获取HeadLine
+        try {
+            HeadLineExecution hle = headLineService.getHeadLineList(1);
+            if (hle.getState() == HeadLineEnum.QUERY_SUCCESS.getState()) {
+                modelMap.put("success", true);
+                modelMap.put("headLineList", hle.getHeadLineList());
+            }else {
+                modelMap.put("success", false);
+                modelMap.put("errMsg", hle.getStateInfo());
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            modelMap.put("success", false);
+            modelMap.put("errMsg", e.toString());
+        }
 
         return modelMap;
     }

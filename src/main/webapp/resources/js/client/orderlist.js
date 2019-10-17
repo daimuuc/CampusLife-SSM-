@@ -21,13 +21,6 @@ $(function () {
     // 预先加载3条订单信息
     addItems(pageSize, pageNum);
 
-    // 下滑屏幕自动进行分页搜索
-    $(document).on('infinite', '.infinite-scroll-bottom', function() {
-        if (loading)
-            return;
-        addItems(pageSize, pageNum);
-    });
-
     // 需要查询的商品名字发生变化后，重置页码，清空原先的订单列表，按照新的名字去查询
     $('#search').on('change', function(e) {
         productName = e.target.value;
@@ -69,6 +62,13 @@ $(function () {
     $('.shop-list').on('click', '.card', function(e) {
         var productId = e.currentTarget.dataset.productId;
         window.location.href = '/campus_life/client/productdetail?productId=' + productId;
+    });
+
+    // 下滑屏幕自动进行分页搜索
+    $(document).on('infinite', '.infinite-scroll-bottom', function() {
+        if (loading)
+            return;
+        addItems(pageSize, pageNum);
     });
 
     // 初始化页面
