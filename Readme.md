@@ -14,3 +14,4 @@ Chrome浏览器
 2. 配置PathUtil.java文件，确定图片存储路径
 *****
 ### 项目演示
+https://github.com/JunhaoCheng/CampusLife-SSM-/blob/master/演示视屏.mp4
