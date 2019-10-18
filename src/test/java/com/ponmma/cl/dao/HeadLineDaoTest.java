@@ -4,6 +4,7 @@ import com.ponmma.cl.BaseTest;
 import com.ponmma.cl.entity.HeadLine;
 import com.ponmma.cl.entity.ShopInfo;
 import com.ponmma.cl.entity.SingleImageInfo;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +17,7 @@ public class HeadLineDaoTest extends BaseTest {
     @Autowired
     private HeadLineDao headLineDao;
 
+    @Ignore
     @Test
     public void testInsertHeadLine() {
         HeadLine headLine = new HeadLine();
@@ -33,6 +35,7 @@ public class HeadLineDaoTest extends BaseTest {
         System.out.println(headLine);
     }
 
+    @Ignore
     @Test
     public void testQueryHeadLineList() {
         List<HeadLine> headLineList = headLineDao.queryHeadLineList(1);
@@ -40,6 +43,7 @@ public class HeadLineDaoTest extends BaseTest {
         System.out.println(headLineList);
     }
 
+    @Ignore
     @Test
     public void testDeleteHeadLine() {
         int id = 1;
@@ -48,6 +52,7 @@ public class HeadLineDaoTest extends BaseTest {
         assertEquals(1, effectNum);
     }
 
+    @Ignore
     @Test
     public void testUpdateHeadLine() {
         int id = 2, status = 1;

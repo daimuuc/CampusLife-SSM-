@@ -9,9 +9,12 @@ public class PathUtil {
 		if (os.toLowerCase().startsWith("win")) {
 			// 自定义生成图片存放地址
 			basePath = "D:/projectdev/campus_life";
+		} else if (os.toLowerCase().startsWith("mac")){
+			// 自定义生成图片存放地址
+			basePath = "/Users/antony/Desktop/项目/java-web/resources/campus_life";
 		} else {
 			// 自定义生成图片存放地址
-			basePath = "/Users/antony/Desktop/项目/resources/campus_life";
+			basePath = "/root/Project/campus_life";
 		}
 		basePath = basePath.replace("/", seperator);
 		return basePath;

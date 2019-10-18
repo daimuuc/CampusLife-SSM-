@@ -2,6 +2,7 @@ package com.ponmma.cl.dao;
 
 import com.ponmma.cl.BaseTest;
 import com.ponmma.cl.entity.Area;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +15,7 @@ public class AreaDaoTest extends BaseTest {
     @Autowired
     private AreaDao areaDao;
 
+    @Ignore
     @Test
     public void testInsertArea() {
         Area area = new Area();
@@ -24,12 +26,14 @@ public class AreaDaoTest extends BaseTest {
         System.out.println(area.getId());
     }
 
+    @Ignore
     @Test
     public void testQueryAreaList() {
         List<Area> list = areaDao.queryAreaList();
         assertEquals(1, list.size());
     }
 
+    @Ignore
     @Test
     public void testUpdateArea() {
         Area area = areaDao.queryAreaList().get(0);
@@ -39,6 +43,7 @@ public class AreaDaoTest extends BaseTest {
         assertEquals(1, effectNum);
     }
 
+    @Ignore
     @Test
     public void testDeleteArea() {
         Integer id = 1;

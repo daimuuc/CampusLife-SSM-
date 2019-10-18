@@ -2,11 +2,13 @@ package com.ponmma.cl.dao;
 
 import com.ponmma.cl.BaseTest;
 import com.ponmma.cl.entity.SingleImageInfo;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
 
+@Ignore
 public class SingleImageInfoDaoTest extends BaseTest {
 
     @Autowired

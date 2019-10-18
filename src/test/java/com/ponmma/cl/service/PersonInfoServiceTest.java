@@ -5,12 +5,14 @@ import com.ponmma.cl.dao.PersonInfoDao;
 import com.ponmma.cl.dto.PersonInfoExecution;
 import com.ponmma.cl.entity.PersonInfo;
 import com.ponmma.cl.util.ImageHolder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.FileInputStream;
 
+@Ignore
 public class PersonInfoServiceTest extends BaseTest {
     @Autowired
     private PersonInfoService personInfoService;

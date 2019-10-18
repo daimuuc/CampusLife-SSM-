@@ -3,6 +3,7 @@ package com.ponmma.cl.dao;
 import com.ponmma.cl.BaseTest;
 import com.ponmma.cl.entity.ShopCategory;
 import com.ponmma.cl.entity.SingleImageInfo;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@Ignore
 public class ShopCategoryDaoTest extends BaseTest {
     @Autowired
     private ShopCategoryDao shopCategoryDao;

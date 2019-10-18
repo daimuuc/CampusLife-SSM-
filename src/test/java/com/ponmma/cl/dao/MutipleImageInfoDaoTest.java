@@ -2,6 +2,7 @@ package com.ponmma.cl.dao;
 
 import com.ponmma.cl.BaseTest;
 import com.ponmma.cl.entity.MutipleImageInfo;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +15,7 @@ public class MutipleImageInfoDaoTest extends BaseTest {
     @Autowired
     private MutipleImageInfoDao mutipleImageInfoDao;
 
+    @Ignore
     @Test
     public void testInsertMutipleImageInfoBatch() {
         List<MutipleImageInfo> mutipleImageInfoList = new ArrayList<>();
@@ -30,6 +32,7 @@ public class MutipleImageInfoDaoTest extends BaseTest {
         System.out.println(mutipleImageInfoList);
     }
 
+    @Ignore
     @Test
     public void testQueryMutipleImageInfoList() {
         Integer productInfoId = 2;
@@ -38,6 +41,7 @@ public class MutipleImageInfoDaoTest extends BaseTest {
         System.out.println(mutipleImageInfoList);
     }
 
+    @Ignore
     @Test
     public void testDeleteMutipleImageInfo() {
         Integer productInfoId = 2;

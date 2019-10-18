@@ -8,6 +8,7 @@ import com.ponmma.cl.entity.ShopInfo;
 import com.ponmma.cl.entity.SingleImageInfo;
 import com.ponmma.cl.enums.ProductInfoEnum;
 import com.ponmma.cl.util.ImageHolder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Ignore
 public class ProductInfoTest extends BaseTest {
     @Autowired
     private ProductInfoService productInfoService;

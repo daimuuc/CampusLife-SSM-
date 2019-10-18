@@ -5,6 +5,7 @@ import com.ponmma.cl.dto.ShopCategoryExecution;
 import com.ponmma.cl.entity.ShopCategory;
 import com.ponmma.cl.enums.ShopCategoryEnum;
 import com.ponmma.cl.util.ImageHolder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
 
+@Ignore
 public class ShopCategoryServiceTest extends BaseTest {
     @Autowired
     ShopCategoryService shopCategoryService;

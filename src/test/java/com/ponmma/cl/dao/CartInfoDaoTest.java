@@ -4,6 +4,7 @@ import com.ponmma.cl.BaseTest;
 import com.ponmma.cl.entity.CartInfo;
 import com.ponmma.cl.entity.PersonInfo;
 import com.ponmma.cl.entity.ProductInfo;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,6 +17,7 @@ public class CartInfoDaoTest extends BaseTest {
     @Autowired
     private CartInfoDao cartInfoDao;
 
+    @Ignore
     @Test
     public void testInsertCartInfo() {
         CartInfo cartInfo = new CartInfo();
@@ -31,6 +33,7 @@ public class CartInfoDaoTest extends BaseTest {
         System.out.println(cartInfo);
     }
 
+    @Ignore
     @Test
     public void testQueryCartInfoList() {
         int personInfoId = 11;
@@ -39,6 +42,7 @@ public class CartInfoDaoTest extends BaseTest {
         System.out.println(cartInfoList.get(0));
     }
 
+    @Ignore
     @Test
     public void testQueryCartInfoByProductId() {
         int productInfoId = 16;
@@ -46,6 +50,7 @@ public class CartInfoDaoTest extends BaseTest {
         System.out.println(cartInfo);
     }
 
+    @Ignore
     @Test
     public void testDeleteCartInfoById() {
         int id = 1;
@@ -53,6 +58,7 @@ public class CartInfoDaoTest extends BaseTest {
         assertEquals(1, effectNum);
     }
 
+    @Ignore
     @Test
     public void testDeleteCartInfoBatch() {
         List<CartInfo> cartInfoList = new ArrayList<>();

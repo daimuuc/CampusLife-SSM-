@@ -5,12 +5,15 @@ import com.ponmma.cl.entity.Area;
 import com.ponmma.cl.entity.PersonInfo;
 import com.ponmma.cl.entity.ShopCategory;
 import com.ponmma.cl.entity.ShopInfo;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+
+@Ignore
 public class ShopInfoDaoTest extends BaseTest {
     @Autowired
     private ShopInfoDao shopInfoDao;

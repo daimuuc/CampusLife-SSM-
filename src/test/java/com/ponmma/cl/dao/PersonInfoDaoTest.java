@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.Assert.assertEquals;
 
+@Ignore
 public class PersonInfoDaoTest extends BaseTest {
     @Autowired
     PersonInfoDao personInfoDao;
+
 
     @Test
     public void testInsertPersonInfo() {

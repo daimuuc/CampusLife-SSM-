@@ -5,6 +5,7 @@ import com.ponmma.cl.entity.ProductCategory;
 import com.ponmma.cl.entity.ProductInfo;
 import com.ponmma.cl.entity.ShopInfo;
 import com.ponmma.cl.entity.SingleImageInfo;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@Ignore
 public class ProductInfoDaoTest extends BaseTest {
     @Autowired
     private ProductInfoDao productInfoDao;

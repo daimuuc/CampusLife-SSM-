@@ -5,6 +5,7 @@ import com.ponmma.cl.entity.OrderInfo;
 import com.ponmma.cl.entity.PersonInfo;
 import com.ponmma.cl.entity.ProductInfo;
 import com.ponmma.cl.entity.ShopInfo;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,6 +20,7 @@ public class OrderInfoTest extends BaseTest {
     @Autowired
     private OrderInfoDao orderInfoDao;
 
+    @Ignore
     @Test
     public void  testInsertOrderInfo() {
         OrderInfo orderInfo = new OrderInfo();
@@ -39,6 +41,7 @@ public class OrderInfoTest extends BaseTest {
         System.out.println(orderInfo);
     }
 
+    @Ignore
     @Test
     public void testInsertOrderInfoBatch() {
         List<OrderInfo> orderInfoList = new ArrayList<>();
@@ -64,6 +67,7 @@ public class OrderInfoTest extends BaseTest {
             System.out.println(orderInfo);
     }
 
+    @Ignore
     @Test
     public void testQueryOrderInfoListCondition() {
         OrderInfo orderInfoCondition = new OrderInfo();
@@ -77,6 +81,7 @@ public class OrderInfoTest extends BaseTest {
         System.out.println(orderInfoList);
     }
 
+    @Ignore
     @Test
     public void testQueryOrderInfoCount() {
         OrderInfo orderInfoCondition = new OrderInfo();
@@ -88,6 +93,7 @@ public class OrderInfoTest extends BaseTest {
         System.out.println(cnt);
     }
 
+    @Ignore
     @Test
     public void testUpdateOrderInfo() {
         OrderInfo orderInfo = new OrderInfo();
