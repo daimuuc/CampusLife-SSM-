@@ -16,8 +16,5 @@ Chrome浏览器
 ### 项目演示
 https://github.com/JunhaoCheng/CampusLife-SSM-/blob/master/演示视屏.mp4
 *****
-### TODO
-添加项目设计文档、sql文件
-*****
 ### 如果觉得不错，请Star下!!!
 
